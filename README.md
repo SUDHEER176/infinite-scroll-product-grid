@@ -162,3 +162,6 @@ GET https://dummyjson.com/products?limit=20&skip={skip}
 ## 📄 License
 
 This project is open-source under the MIT License.
+
+<img width="1147" height="706" alt="image" src="https://github.com/user-attachments/assets/560d01d7-9701-4903-b1de-e3faadefcb01" />
+
