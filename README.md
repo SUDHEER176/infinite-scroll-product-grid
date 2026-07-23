@@ -159,9 +159,16 @@ GET https://dummyjson.com/products?limit=20&skip={skip}
 
 ---
 
-## 📄 License
+## Output Screenshots:
+- **Home Page**
+  <img width="1917" height="930" alt="image" src="https://github.com/user-attachments/assets/bce1efdd-fb4c-48ea-b9d5-d158e0b42a79" />
 
-This project is open-source under the MIT License.
+- **Shopping Bag**
+  <img width="1917" height="926" alt="image" src="https://github.com/user-attachments/assets/5c91d398-71cc-44fc-844e-73adb03f520b" />
 
-<img width="1147" height="706" alt="image" src="https://github.com/user-attachments/assets/560d01d7-9701-4903-b1de-e3faadefcb01" />
+
+
+
+
+
 
