@@ -11,13 +11,16 @@ A modern, performant React application that renders a product grid with infinite
 | 🚀 **Live Demo** | [https://infinite-scroll-product-grid-crd54eqlh.vercel.app](https://infinite-scroll-product-grid-crd54eqlh.vercel.app) |
 | 📦 **Repository** | [https://github.com/SUDHEER176/infinite-scroll-product-grid](https://github.com/SUDHEER176/infinite-scroll-product-grid) |
 
-> Deploy on [Vercel](https://vercel.com/) in one click — just connect your GitHub repo.
+
 
 ---
 
 ## ✨ Features
 
 - ♾️ **Infinite Scroll** — Automatically loads more products as the user scrolls to the bottom
+- 🔍 **Real-Time Search & Category Filter** — Instant title search + category pills to filter products dynamically
+- 🔀 **Smart Sort Controls** — Sort items by Price (Low to High, High to Low), Rating, or Alphabetical Order
+- ❤️ **Interactive Wishlist** — Toggle favorite products with persistent `localStorage` saving & wishlist view mode
 - 🔭 **IntersectionObserver API** — Lightweight, native browser API; no heavy dependencies
 - ⚡ **Vite + React 18** — Blazing-fast development and build tooling
 - 🔄 **Duplicate Guard** — Filters out duplicate products across paginated fetches
@@ -195,3 +198,7 @@ Only the fields needed for display (`title`, `price`, `category`, `rating`, `thu
 ## 📄 License
 
 This project is for assignment/demonstration purposes.
+<<<<<<< HEAD
+=======
+#
+>>>>>>> f38481d (change ui design)

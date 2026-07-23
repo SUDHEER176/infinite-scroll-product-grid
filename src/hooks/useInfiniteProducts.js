@@ -1,62 +1,51 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from 'react';
 
-const LIMIT = 20;
+const PAGE_SIZE = 20;
 
-function useInfiniteProducts() {
+export function useInfiniteProducts() {
   const [items, setItems] = useState([]);
-  const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
-  const fetchingRef = useRef(false);
+  const pageRef = useRef(0);
+  const isFetchingRef = useRef(false);
 
   const loadMore = useCallback(async () => {
-    if (fetchingRef.current || !hasMore) {
-      return;
-    }
+    if (isFetchingRef.current || !hasMore) return;
 
-    fetchingRef.current = true;
+    isFetchingRef.current = true;
     setLoading(true);
 
     try {
-      const skip = page * LIMIT;
-      const response = await fetch(
-        `https://dummyjson.com/products?limit=${LIMIT}&skip=${skip}&select=title,price,category,rating,thumbnail`
-      );
-      const data = await response.json();
+      const skip = pageRef.current * PAGE_SIZE;
+      const res = await fetch(`https://dummyjson.com/products?limit=${PAGE_SIZE}&skip=${skip}`);
+      const data = await res.json();
 
-      setItems((oldItems) => {
-        const newItems = data.products.filter(
-          (p) => !oldItems.some((x) => x.id === p.id)
+      setItems(prevItems => {
+        const uniqueProducts = data.products.filter(
+          item => !prevItems.some(existing => existing.id === item.id)
         );
-        return [...oldItems, ...newItems];
+        return [...prevItems, ...uniqueProducts];
       });
 
-      setPage((prev) => prev + 1);
+      pageRef.current += 1;
 
       if (skip + data.products.length >= data.total) {
         setHasMore(false);
       }
-    } catch (error) {
-      console.error("Error fetching products:", error);
+    } catch (err) {
+      console.error('Failed to load products:', err);
     } finally {
       setLoading(false);
-      fetchingRef.current = false;
+      isFetchingRef.current = false;
     }
-  }, [page, hasMore]);
+  }, [hasMore]);
 
   useEffect(() => {
-    if (page === 0 && items.length === 0) {
+    if (pageRef.current === 0 && items.length === 0) {
       loadMore();
     }
-  }, [loadMore, page, items.length]);
+  }, [loadMore, items.length]);
 
-  return {
-    items,
-    loading,
-    hasMore,
-    loadMore,
-  };
+  return { items, loading, hasMore, loadMore };
 }
-
-export { useInfiniteProducts };
