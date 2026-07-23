@@ -1,0 +1,25 @@
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.loadMoreBtn {
+  display: block;
+  margin: 2rem auto;
+  padding: 0.65rem 1.75rem;
+  background: var(--primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.loadMoreBtn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}

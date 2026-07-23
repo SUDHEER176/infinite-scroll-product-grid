@@ -1,0 +1,7 @@
+.messageBox {
+  text-align: center;
+  padding: 2.5rem 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+  font-weight: 500;
+}
