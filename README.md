@@ -7,8 +7,7 @@ A modern, performant React application that renders a product grid with infinite
 ## 🌐 Live Demo & Repository
 
 | | Link |
-|---|---|
-| 🚀 **Live Demo** | [https://your-vercel-link.vercel.app]((http://infinite-scroll-product-grid-ngth-three.vercel.app/)) |
+|---|---|| 🚀 **Live Demo** | [https://your-vercel-link.vercel.app]([https://your-vercel-link.vercel.app](https://infinite-scroll-product-grid-crd54eqlh.vercel.app/)) |
 | 📦 **Repository** | [https://github.com/SUDHEER176/infinite-scroll-product-grid](https://github.com/SUDHEER176/infinite-scroll-product-grid) |
 
 > Deploy on [Vercel](https://vercel.com/) in one click — just connect your GitHub repo.
