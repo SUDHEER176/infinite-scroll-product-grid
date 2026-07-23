@@ -1,33 +1,81 @@
 # 🛍️ Infinite Scroll Product Grid
 
-A modern, performant React application that renders a product grid with infinite scrolling powered by the native **IntersectionObserver API** — no third-party scroll libraries required.
+A modern, performant E-Commerce application built with **React 18** and **Vite**, featuring native infinite scroll pagination using the **IntersectionObserver API** and a full suite of unique E-Commerce features.
 
 ---
 
 ## 🌐 Live Demo & Repository
 
-| | Link |
+| Resource | Link |
 |---|---|
-| 🚀 **Live Demo** | [https://infinite-scroll-product-grid-crd54eqlh.vercel.app](https://infinite-scroll-product-grid-crd54eqlh.vercel.app) |
-| 📦 **Repository** | [https://github.com/SUDHEER176/infinite-scroll-product-grid](https://github.com/SUDHEER176/infinite-scroll-product-grid) |
-
-
+| 🚀 **Live Demo** | [https://infinite-scroll-product-grid.vercel.app](https://infinite-scroll-product-grid.vercel.app) |
+| 📦 **GitHub Repository** | [https://github.com/SUDHEER176/infinite-scroll-product-grid](https://github.com/SUDHEER176/infinite-scroll-product-grid) |
 
 ---
 
-## ✨ Features
+## 🎯 Primary Problem Statement Requirements (Core Features)
 
-- ♾️ **Infinite Scroll** — Automatically loads more products as the user scrolls to the bottom
-- 🔍 **Real-Time Search & Category Filter** — Instant title search + category pills to filter products dynamically
-- 🔀 **Smart Sort Controls** — Sort items by Price (Low to High, High to Low), Rating, or Alphabetical Order
-- ❤️ **Interactive Wishlist** — Toggle favorite products with persistent `localStorage` saving & wishlist view mode
-- 🔭 **IntersectionObserver API** — Lightweight, native browser API; no heavy dependencies
-- ⚡ **Vite + React 18** — Blazing-fast development and build tooling
-- 🔄 **Duplicate Guard** — Filters out duplicate products across paginated fetches
-- 🌀 **Loading Spinner** — Visual feedback while fetching the next page
-- 📭 **End-of-List Message** — Notifies users when all products have been loaded
-- 🖼️ **Product Cards** — Displays thumbnail, title, category, price, and rating
-- 📱 **Responsive Layout** — Grid adapts to all screen sizes
+These core requirements fulfill the assignment specification using the [DummyJSON Products API](https://dummyjson.com/products?limit=20&skip=):
+
+| Requirement | Implementation Details | Status |
+|---|---|---|
+| **IntersectionObserver Infinite Scroll** | Uses native browser `IntersectionObserver` sentinel element to trigger automated paginated fetches as the user scrolls near the bottom — **zero scroll event listeners used**. | ✅ Complete |
+| **Duplicate Fetch Prevention** | Guarded by `isFetchingRef` (`useRef`) to prevent redundant or duplicate network requests when the observer fires repeatedly during inflight API requests. | ✅ Complete |
+| **Correct Pagination Math** | Accurately calculates `skip` offsets (`page × limit`, `limit=20`) to fetch all 194 products seamlessly from `https://dummyjson.com/products?limit=20&skip=`. | ✅ Complete |
+| **Scroll Position Preservation** | Appends new product batches without jumping or resetting the window scroll position. | ✅ Complete |
+| **End-of-List State** | Displays a distinct `"🎉 You've reached the end! Showing all 194 products."` banner when all available items are loaded. | ✅ Complete |
+| **Manual "Load More" Fallback** | Feature-detects `IntersectionObserver` support. If unsupported by an older browser, gracefully degrades to a manual **"Load More"** button. | ✅ Complete |
+
+---
+
+## ✨ Added Unique Features (Custom Enhancements)
+
+Beyond the core assignment requirements, the following unique features were added to deliver a complete, high-end e-commerce experience:
+
+### 1. 🔍 Real-Time Live Search
+- Integrated search bar in the sticky navigation header.
+- Instant live search that matches product titles, brand names, and category keywords.
+- One-click clear (`×`) button to reset search queries.
+
+### 2. 🏷️ Vertical Flaticon Category Sidebar
+- Sticky left vertical navigation bar featuring custom **Flaticon UIcons** for every product category:
+  - **All**: `fi-rr-border-all`
+  - **Beauty**: `fi-rr-sparkles`
+  - **Smartphones**: `fi-rr-mobile-hand`
+  - **Laptops**: `fi-rs-laptop`
+  - **Fragrances**: `fi-rr-flower-tulip`
+  - **Skin Care**: `fi-rr-cream`
+  - **Groceries**: `fi-ts-grocery-basket`
+  - **Home Decor**: `fi-rr-couch`
+  - **Tops**: `fi-rr-shirt-tank-top`
+  - **Shoes**: `fi-rs-hiking-boot`
+  - **Watches**: `fi-rr-watch-smart`
+  - **Sports**: `fi-rr-volleyball`
+- Real-time result counter pill showing loaded & filtered product counts.
+
+### 3. 🔀 Multi-Option Sorting Engine
+- Dynamic product sorting dropdown options:
+  - **Featured** (Default API order)
+  - **Price: Low → High**
+  - **Price: High → Low**
+  - **Highest Rated**
+  - **Most Discounted**
+
+### 4. ❤️ Persistent Wishlist Drawer
+- Quick-toggle ♡ heart button on product cards (`fi-rs-heart` / `fi-ss-heart`).
+- Slide-in side Wishlist Drawer showing saved items.
+- Live total wishlist value calculation formatted in USD (`$`).
+- Full **`localStorage` persistence** across page reloads.
+
+### 5. 🛒 Shopping Bag Cart Drawer with Item Removal
+- **"Add to Bag"** hover overlay button on product cards.
+- Slide-in Shopping Bag Drawer showing item counts, unit prices, and subtotal.
+- **Quantity controls (`+` / `-`)** and **Item Removal buttons** inside the drawer.
+- Full **`localStorage` persistence**.
+
+### 6. 🔔 Animated Toast Notifications
+- Slide-up notification toast giving visual feedback whenever a product is added to the shopping bag.
+- Automatic 3-second dismissal or manual close.
 
 ---
 
@@ -35,24 +83,27 @@ A modern, performant React application that renders a product grid with infinite
 
 ```
 frontend/
-├── index.html                        # HTML entry point
-├── vite.config.js                    # Vite configuration
+├── index.html                            # HTML entry point with Flaticon CDN links
+├── vercel.json                           # Vercel deployment & SPA routing rules
 ├── package.json
 └── src/
-    ├── main.jsx                      # React DOM root
-    ├── App.jsx                       # Root app component
-    ├── index.css                     # Global styles
+    ├── main.jsx                          # React DOM entry point
+    ├── App.jsx                           # Root layout & drawer state manager
+    ├── index.css                         # Design tokens, variables & reset styles
     ├── hooks/
-    │   └── useInfiniteProducts.js    # Custom hook — fetch & pagination logic
+    │   ├── useInfiniteProducts.js        # Core pagination & fetch hook
+    │   ├── useWishlist.js                # Wishlist state & localStorage sync
+    │   └── useCart.js                    # Shopping bag state & localStorage sync
     └── components/
-        ├── Products/
-        │   └── ProductGrid.jsx       # Grid container + IntersectionObserver
-        ├── ProductCard/
-        │   └── ProductCard.jsx       # Individual product card
-        ├── Spinner/
-        │   └── Spinner.jsx           # Loading spinner
-        └── MessageBox/
-            └── MessageBox.jsx        # End-of-list / error messages
+        ├── Navbar/                       # Sticky header with search & drawer badges
+        ├── FilterSortBar/                # Vertical Flaticon sidebar & sort list
+        ├── Products/                     # Grid container & IntersectionObserver sentinel
+        ├── ProductCard/                  # Product card with hover action & wishlist heart
+        ├── WishlistDrawer/               # Slide-in wishlist drawer panel
+        ├── CartDrawer/                   # Slide-in cart drawer with remove & qty controls
+        ├── Toast/                        # Notification toast
+        ├── Spinner/                      # Loading spinner
+        └── MessageBox/                   # End-of-list banner component
 ```
 
 ---
@@ -60,145 +111,54 @@ frontend/
 ## 🚀 Getting Started
 
 ### Prerequisites
+- [Node.js](https://nodejs.org/) v18+
+- npm v9+
 
-- [Node.js](https://nodejs.org/) v18 or later
-- npm v9 or later
-
-### Installation
+### Installation & Local Setup
 
 ```bash
-# Clone the repository
-git clone <your-repo-url>
+# 1. Clone the repository
+git clone https://github.com/SUDHEER176/infinite-scroll-product-grid.git
 cd frontend
 
-# Install dependencies
+# 2. Install dependencies
 npm install
-```
 
-### Running Locally
-
-```bash
+# 3. Start local development server
 npm run dev
 ```
 
-The app will be available at **http://localhost:5173** by default.
+The application will be running at **http://localhost:5173**.
 
-### Build for Production
+### Production Build
 
 ```bash
 npm run build
 ```
 
-Preview the production build locally:
+---
 
-```bash
-npm run preview
+## 📡 API Endpoint
+
+Data is dynamically fetched from the [DummyJSON API](https://dummyjson.com/docs/products):
+
+```http
+GET https://dummyjson.com/products?limit=20&skip={skip}
 ```
 
 ---
 
-## 🔧 How It Works
+## 🛠️ Built With
 
-### `useInfiniteProducts` Hook
-
-The core logic lives in [`src/hooks/useInfiniteProducts.js`](src/hooks/useInfiniteProducts.js).
-
-| State / Ref | Purpose |
-|---|---|
-| `items` | Accumulated list of all fetched products |
-| `page` | Current page index (0-based) |
-| `loading` | Boolean — true while a fetch is in-flight |
-| `hasMore` | False when all products have been loaded |
-| `fetchingRef` | Ref guard to prevent concurrent duplicate fetches |
-
-**Pagination** is handled by passing `limit` (20) and `skip` (`page × 20`) to the [DummyJSON Products API](https://dummyjson.com/docs/products).
-
-### IntersectionObserver
-
-The `Products` grid component attaches an `IntersectionObserver` to a sentinel element at the bottom of the list. When the sentinel enters the viewport, `loadMore()` is called to fetch the next page.
-
-### Load More Fallback
-
-If `IntersectionObserver` is **not supported** by the browser, a manual **"Load More"** button is rendered instead, ensuring the app works in all environments:
-
-```jsx
-// ProductGrid.jsx
-const isSupported = typeof window !== "undefined" && "IntersectionObserver" in window;
-
-{hasMore && !isSupported && !loading && (
-  <button onClick={loadMore} className={styles.loadMoreBtn}>
-    Load More
-  </button>
-)}
-
----
-
-## 📡 API
-
-Data is fetched from the free [DummyJSON](https://dummyjson.com) public API.
-
-```
-GET https://dummyjson.com/products?limit=20&skip={skip}&select=title,price,category,rating,thumbnail
-```
-
-Only the fields needed for display (`title`, `price`, `category`, `rating`, `thumbnail`) are selected to keep payloads small.
-
----
-
-## 🛠️ Tech Stack
-
-| Technology | Version | Purpose |
-|---|---|---|
-| [React](https://react.dev/) | 18.2 | UI framework |
-| [Vite](https://vitejs.dev/) | 5.2 | Build tool & dev server |
-| [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react) | 4.2 | JSX + Fast Refresh support |
-| [DummyJSON](https://dummyjson.com/) | — | Mock product REST API |
-
----
-
-## 📸 Screenshots
-
-> Add screenshots to a `screenshots/` folder and update the paths below.
-
-| Home Page | End of List |
-|---|---|
-| ![Home Page](./screenshots/home.png) | ![End State](./screenshots/end.png) |
-
----
-
-## ✅ Assignment Requirements Covered
-
-| Requirement | Status |
-|---|---|
-| Infinite scroll using IntersectionObserver | ✅ |
-| No scroll event listeners used | ✅ |
-| Duplicate request prevention via `fetchingRef` guard | ✅ |
-| Correct pagination (`limit` / `skip`) | ✅ |
-| End-of-list state with message | ✅ |
-| Responsive product grid | ✅ |
-| Loading indicator (spinner) | ✅ |
-| Manual "Load More" button fallback when IntersectionObserver is unsupported | ✅ |
-
----
-
-## 📋 Final Submission Checklist
-
-- [ ] Public GitHub repository
-- [ ] README.md with setup instructions
-- [ ] Working infinite scroll
-- [ ] No duplicate fetches
-- [ ] End-of-list message
-- [ ] "Load More" fallback button
-- [ ] Responsive UI
-- [ ] `npm install` and `npm run dev` work correctly
-- [ ] (Optional) Deployed to Vercel with live link
+- **React 18**
+- **Vite 5**
+- **Vanilla CSS Modules**
+- **IntersectionObserver API**
+- **Flaticon UIcons**
+- **HTML5 Web Storage (localStorage)**
 
 ---
 
 ## 📄 License
 
-This project is for assignment/demonstration purposes.
-<<<<<<< HEAD
-=======
-#
->>>>>>> f38481d (change ui design)
+This project is open-source under the MIT License.
